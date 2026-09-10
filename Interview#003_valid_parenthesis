@@ -1,0 +1,54 @@
+# Question : https://leetcode.com/problems/valid-parentheses/description/
+
+# Valid Parentheses — Solution
+
+## Approach — Stack
+
+Aapan string madhun ek-ek bracket check karu.
+
+- Opening bracket `(`, `{`, `[` asel tar Stack madhe push karu.
+- Closing bracket `)`, `}`, `]` asel tar Stack cha top check karu.
+- Top bracket cha corresponding opening bracket nasel tar string invalid aahe.
+- Shevti Stack empty asel tarch string valid aahe.
+
+### C++ Solution
+
+```cpp
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> st;
+
+        for (char ch : s) {
+
+            // Opening bracket asel tar Stack madhe push karu
+            if (ch == '(' || ch == '{' || ch == '[') {
+                st.push(ch);
+            }
+            else {
+                // Closing bracket sathi Stack empty asel tar invalid
+                if (st.empty()) {
+                    return false;
+                }
+
+                // Stack madhla top bracket check karu
+                char top = st.top();
+
+                // Current closing bracket sathi
+                // correct opening bracket aahe ka te check karu
+                if ((ch == ')' && top != '(') ||
+                    (ch == '}' && top != '{') ||
+                    (ch == ']' && top != '[')) {
+                    return false;
+                }
+
+                // Matching pair sapadla, mhanun top remove karu
+                st.pop();
+            }
+        }
+
+        // Saglya brackets che matching pairs zhale pahijet
+        // mhanun Stack empty asne required aahe
+        return st.empty();
+    }
+};
